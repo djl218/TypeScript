@@ -12,6 +12,7 @@
   },
   "scripts": {
     "ts-node": "ts-node",
+    "calculate_bmi": "ts-node bmiCalculator.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Daniel Leskosky",
