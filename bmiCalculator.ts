@@ -1,7 +1,13 @@
 interface BmiValues {
   value1: number;
   value2: number;
-}
+};
+
+interface Result {
+  weight: number;
+  height: number;
+  bmi: string;
+};
 
 const parseArguments = (args: Array<string>): BmiValues => {
   if (args.length < 4) throw new Error('Not enough arguments');
@@ -11,27 +17,38 @@ const parseArguments = (args: Array<string>): BmiValues => {
     return {
       value1: Number(args[2]),
       value2: Number(args[3])
-    }
+    };
   } else {
     throw new Error('Provided values were not numbers!');
   }
-}
+};
 
-const calculateBmi = (height: number, weight: number) => {
-  if (height < 90) throw new Error('Too short of a height');
-  if (weight < 10) throw new Error('Too small of a weight');
+export const calculateBmi = (height_: number, weight_: number): Result => {
+  if (height_ < 90) throw new Error('Too short of a height');
+  if (weight_ < 10) throw new Error('Too small of a weight');
   
-  const bmi = weight / height / height * 10000;
+  const bmi: number = weight_ / height_ / height_ * 10000;
+  let message: string = '';
   
   if (bmi < 18.5) {
-    console.log('Underweight (unhealthy weight)');
+    message = 'Underweight (unhealthy weight)';
+    console.log(message);
   } else if (bmi > 18.5 && bmi < 24.9) {
-    console.log('Normal (healthy weight)');
+    message = 'Normal (healthy weight)';
+    console.log(message);
   } else if (bmi > 25 && bmi < 30) {
-    console.log('Overweight (unhealthy weight)');
+    message = 'Overweight (unhealthy weight)';
+    console.log(message);
   } else if (bmi > 30) {
-    console.log('Obese (unhealthy weight)');
+    message = 'Obese (unhealthy weight)';
+    console.log(message);
   }
+
+  return {
+    weight: weight_,
+    height: height_,
+    bmi: message
+  };
 }
 
 try {
