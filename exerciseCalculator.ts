@@ -1,26 +1,34 @@
-interface ExerciseValues {
-  periodLength: number;
-  trainingDays: number;
-  success: boolean;
-  rating: number;
-  ratingDescription: string;
-  target: number;
-  average: number;
+interface ParsedValues {
+  value1: number;
+  value2: Array<number>;
 }
 
-const parseArguments = (args: Array<number>, target: number): ExerciseValues => {
-  let count = 0;
+const interpretArguments = (args: Array<string>): ParsedValues => {
+  if (args.length < 4) throw new Error('Not enough arguments');
+
+  if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
+    return {
+      value1: Number(args[2]),
+      value2: args.map(Number).slice(3)
+    }
+  } else {
+    throw new Error('Provided values were not numbers!');
+  }
+}
+
+const calculateExercise = (target: number, hours: Array<number>)=> {
+  let count: number = 0;
   const reducer = (accumulator: number, currentValue: number) => accumulator + currentValue;
-  const sum = args.reduce(reducer)
+  const sum: number = hours.reduce(reducer)
   let rating = 0;
   let ratingDescription = '';
 
-  const periodLength = args.length;
-  const average =  (sum / args.length); 
+  const periodLength = hours.length;
+  const average =  (sum / hours.length); 
   const success = average > target ? true : false;
 
-  for (let i = 0; i < args.length; i++) {
-    if (args[i] > 0) {
+  for (let i = 0; i < hours.length; i++) {
+    if (hours[i] > 0) {
       count++;
     }
   }
@@ -38,7 +46,7 @@ const parseArguments = (args: Array<number>, target: number): ExerciseValues => 
     ratingDescription = 'not enough exercise';
   }
 
-  return {
+  const exerciseValues = {
     periodLength,
     trainingDays,
     success,
@@ -46,13 +54,14 @@ const parseArguments = (args: Array<number>, target: number): ExerciseValues => 
     ratingDescription,
     target,
     average
-  }
+  };
+
+  console.log(exerciseValues)
 }
 
 try {
-  console.log(parseArguments([3, 0, 2, 4.5, 0, 3, 1], 2));
+  const { value1, value2 } = interpretArguments(process.argv);
+  calculateExercise(value1, value2);
 } catch (e) {
   console.log('Something went wrong, error message: ', e.message);
 }
-
-console.log(process.argv);
