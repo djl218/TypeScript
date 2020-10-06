@@ -10,16 +10,16 @@ const interpretArguments = (args: Array<string>): ParsedValues => {
     return {
       value1: Number(args[2]),
       value2: args.map(Number).slice(3)
-    }
+    };
   } else {
     throw new Error('Provided values were not numbers!');
   }
-}
+};
 
 const calculateExercise = (target: number, hours: Array<number>)=> {
-  let count: number = 0;
+  let count = 0;
   const reducer = (accumulator: number, currentValue: number) => accumulator + currentValue;
-  const sum: number = hours.reduce(reducer)
+  const sum: number = hours.reduce(reducer);
   let rating = 0;
   let ratingDescription = '';
 
@@ -56,12 +56,13 @@ const calculateExercise = (target: number, hours: Array<number>)=> {
     average
   };
 
-  console.log(exerciseValues)
-}
+  console.log(exerciseValues);
+};
 
 try {
   const { value1, value2 } = interpretArguments(process.argv);
   calculateExercise(value1, value2);
 } catch (e) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   console.log('Something went wrong, error message: ', e.message);
 }

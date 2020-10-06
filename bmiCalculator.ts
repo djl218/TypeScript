@@ -1,13 +1,13 @@
 interface BmiValues {
   value1: number;
   value2: number;
-};
+}
 
 interface Result {
   weight: number;
   height: number;
   bmi: string;
-};
+}
 
 const parseArguments = (args: Array<string>): BmiValues => {
   if (args.length < 4) throw new Error('Not enough arguments');
@@ -28,7 +28,7 @@ export const calculateBmi = (height_: number, weight_: number): Result => {
   if (weight_ < 10) throw new Error('Too small of a weight');
   
   const bmi: number = weight_ / height_ / height_ * 10000;
-  let message: string = '';
+  let message = '';
   
   if (bmi < 18.5) {
     message = 'Underweight (unhealthy weight)';
@@ -49,11 +49,12 @@ export const calculateBmi = (height_: number, weight_: number): Result => {
     height: height_,
     bmi: message
   };
-}
+};
 
 try {
   const { value1, value2 } = parseArguments(process.argv);
   calculateBmi(value1, value2);
 } catch (e) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   console.log('Something went wrong, error message: ', e.message);
 }
