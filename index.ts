@@ -40,6 +40,7 @@ app.post('/exercises', (req, res) => {
   } else {
     hours = null;
   }
+  
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   if (!isNaN(body.target)) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
