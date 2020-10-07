@@ -3,6 +3,16 @@ interface ParsedValues {
   value2: Array<number>;
 }
 
+interface Result {
+  periodLength: number;
+  trainingDays: number;
+  success: boolean;
+  rating: number;
+  ratingDescription: string;
+  target: number;
+  average: number;
+}
+
 const interpretArguments = (args: Array<string>): ParsedValues => {
   if (args.length < 4) throw new Error('Not enough arguments');
 
@@ -16,7 +26,7 @@ const interpretArguments = (args: Array<string>): ParsedValues => {
   }
 };
 
-const calculateExercise = (target: number, hours: Array<number>)=> {
+export const calculateExercise = (target: number, hours: Array<number>): Result=> {
   let count = 0;
   const reducer = (accumulator: number, currentValue: number) => accumulator + currentValue;
   const sum: number = hours.reduce(reducer);
@@ -57,6 +67,8 @@ const calculateExercise = (target: number, hours: Array<number>)=> {
   };
 
   console.log(exerciseValues);
+
+  return exerciseValues;
 };
 
 try {
